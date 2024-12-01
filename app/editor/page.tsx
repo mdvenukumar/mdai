@@ -31,6 +31,13 @@ interface HistoryState {
   cursorPosition: { start: number; end: number };
 }
 
+interface CodeProps extends React.HTMLAttributes<HTMLElement> {
+  node?: any;
+  inline?: boolean;
+  className?: string;
+  children: React.ReactNode;
+}
+
 export default function Editor() {
   const [content, setContent] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
@@ -460,7 +467,7 @@ export default function Editor() {
                     <ReactMarkdown 
                       remarkPlugins={[remarkGfm]}
                       components={{
-                        code({ node, inline, className, children, ...props }) {
+                        code({ node, inline, className, children, ...props }: CodeProps) {
                           const match = /language-(\w+)/.exec(className || '');
                           const lang = match ? match[1] : '';
                           
